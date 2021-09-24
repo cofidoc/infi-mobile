@@ -5,13 +5,13 @@ import { Box, Button, Typography } from "@mui/material";
 import { Link, LinkProps, useRouteMatch, useParams } from "react-router-dom";
 import { signOut } from "@firebase/auth";
 import { auth } from "./firebase";
-import { useGeOfficeById } from "./office/useGeOfficeById";
+import { useGetOfficeById } from "./office/api";
 import { useAuth } from "./auth/authContext";
 
 export function Home() {
   const [open, setOpen] = useState(false);
   const { officeId } = useParams<{ officeId: string }>();
-  const { office } = useGeOfficeById(officeId);
+  const { office } = useGetOfficeById(officeId);
   const { user } = useAuth();
 
   return (
@@ -20,12 +20,7 @@ export function Home() {
         <MenuIcon />
       </IconButton>
 
-      <SwipeableDrawer
-        anchor="left"
-        open={open}
-        onClose={() => setOpen(false)}
-        onOpen={() => setOpen(true)}
-      >
+      <SwipeableDrawer anchor="left" open={open} onClose={() => setOpen(false)} onOpen={() => setOpen(true)}>
         <Box
           sx={{
             width: "200px",
@@ -73,9 +68,7 @@ export function Home() {
           </Typography>
         </Box>
 
-        <Box
-          sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}
-        >
+        <Box sx={{ display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
           <Box
             sx={{
               display: "flex",
@@ -105,13 +98,7 @@ export function Home() {
   );
 }
 
-function LinkNavBar({
-  to,
-  children,
-}: {
-  to: LinkProps["to"];
-  children: ReactNode;
-}) {
+function LinkNavBar({ to, children }: { to: LinkProps["to"]; children: ReactNode }) {
   const { url } = useRouteMatch();
   return (
     <Box p={2} sx={{ borderBottom: 1 }}>
@@ -145,12 +132,7 @@ function Tile({ to, text, bg }: any) {
             "rgb(0 0 0 / 20%) 0px 3px 1px -2px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px",
         }}
       >
-        <Typography
-          color="white"
-          px={2}
-          textAlign="center"
-          sx={{ fontWeight: "bold" }}
-        >
+        <Typography color="white" px={2} textAlign="center" sx={{ fontWeight: "bold" }}>
           {text}
         </Typography>
       </Box>

@@ -1,10 +1,9 @@
-import { addDoc, collection, doc, getDoc } from "@firebase/firestore";
+import { addDoc, collection } from "@firebase/firestore";
 import { useParams, useHistory } from "react-router";
 import { db } from "../firebase";
-import { PatientType } from "../types";
-import useSWR from "swr";
 import { FormPatient } from "./FormPatient";
 import { Loader } from "../ui/Loader";
+import { useGePatientById } from "./api";
 
 type Params = {
   officeId: string;
@@ -34,16 +33,4 @@ export function UpdatePatient() {
       }}
     />
   );
-}
-
-function useGePatientById(officeId: string, patientId: string) {
-  const { data: patient } = useSWR<PatientType>(
-    `/offices/${officeId}/patients/${patientId}`,
-    async () => {
-      const docRef = doc(db, `/offices/${officeId}/patients`, patientId);
-      const docSnap = await getDoc(docRef);
-      return docSnap.data() as PatientType;
-    }
-  );
-  return { patient };
 }

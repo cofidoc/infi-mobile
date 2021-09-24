@@ -1,5 +1,5 @@
-import { Box } from "@mui/system";
+import CircularProgress from "@mui/material/CircularProgress";
 
 export function Loader() {
-  return <Box>...Loading</Box>;
+  return <CircularProgress />;
 }

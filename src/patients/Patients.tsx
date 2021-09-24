@@ -105,7 +105,7 @@ function SectionList<T extends { id: string }>({
   return (
     <StickyTree
       root={{ id: "root", height: 30 } as any}
-      height={window.innerHeight - 130}
+      height={window.innerHeight - 170}
       getChildren={getChildren}
       rowRenderer={({ id, style, nodeInfo }: any) => {
         const node = tree[id];

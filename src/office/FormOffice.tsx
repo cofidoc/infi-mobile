@@ -1,77 +1,13 @@
 import { Header } from "../ui/Header";
 import { Formik, Form, Field, FormikConfig } from "formik";
 import { Box, Button, TextField } from "@mui/material";
-import { addDoc, updateDoc, collection, doc } from "firebase/firestore";
-import { db, auth } from "../firebase";
-import { useHistory, useParams } from "react-router-dom";
-import { useGeOfficeById } from "./useGeOfficeById";
-
-export type OfficeType = {
-  name: string;
-  finess: string;
-  address: string;
-  city: string;
-  zipCode: string;
-};
-
-export function CreateOffice() {
-  const history = useHistory();
-
-  return (
-    <FormOffice
-      labelSubmit="Ajouter un Cabinet"
-      initialValues={{
-        name: "",
-        finess: "",
-        address: "",
-        city: "",
-        zipCode: "",
-      }}
-      onSubmit={async (values, { setSubmitting }) => {
-        try {
-          const officeRef = await addDoc(collection(db, "offices"), values);
-          const userId = auth.currentUser?.uid || "";
-          const userRef = doc(db, "users", userId);
-          await updateDoc(userRef, { officeIds: [officeRef.id] });
-          history.push("/");
-        } catch (err) {
-          console.error(err);
-        } finally {
-          setSubmitting(false);
-        }
-      }}
-    />
-  );
-}
-
-export function UpdateOffice() {
-  const { officeId } = useParams<{ officeId: string }>();
-  const { office } = useGeOfficeById(officeId);
-
-  if (!office) return null;
-
-  return (
-    <FormOffice
-      labelSubmit="Modifier le Cabinet"
-      initialValues={office}
-      onSubmit={async (values, { setSubmitting }) => {
-        try {
-          await updateDoc(doc(db, "offices", officeId), values);
-        } catch (err) {
-          console.error(err);
-        } finally {
-          setSubmitting(false);
-        }
-      }}
-    />
-  );
-}
+import { OfficeType } from "../types";
 
 type OfficeFormValues = OfficeType;
 
-function FormOffice(
-  props: FormikConfig<OfficeFormValues> & { labelSubmit: string }
-) {
+type FormOfficeProps = FormikConfig<OfficeFormValues> & { labelSubmit: string };
+
+export function FormOffice(props: FormOfficeProps) {
   return (
     <>
       <Header text="Cabinet" />

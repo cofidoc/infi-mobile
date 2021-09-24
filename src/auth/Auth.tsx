@@ -1,5 +1,5 @@
 import { Switch, Route } from "react-router-dom";
-import { CreateOffice } from "../office/Office";
+import { CreateOffice } from "../office/CreateOffice";
 import { Login } from "./Login";
 import { ResetPassword } from "./ResetPassword";
 import { SignUp } from "./SignUp";

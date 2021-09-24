@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { AuthRoutes } from "./auth/Auth";
 import { AuthProvider } from "./auth/authContext";
 import { Home } from "./Home";
-import { UpdateOffice } from "./office/Office";
+import { UpdateOffice } from "./office/UpdateOffice";
 import { Patient } from "./patients/Patient";
 import { CreatePatient } from "./patients/CreatePatient";
 import { Patients } from "./patients/Patients";
