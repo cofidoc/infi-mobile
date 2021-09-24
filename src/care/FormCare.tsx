@@ -237,7 +237,7 @@ function DatePickerField({ name, label }: { name: string; label: string }) {
 function ActsField({ name, index }: { name: string; index: number }) {
   const { values, setFieldValue } = useFormikContext<CareFormValues>();
 
-  const acts = useMemo(() => getGeneratedActs(values.cares?.[index]), [values]);
+  const acts = useMemo(() => getGeneratedActs(values.cares?.[index]), [values, index]);
 
   useEffect(() => {
     setFieldValue(name, acts);
@@ -377,7 +377,7 @@ function DateRangePickerField({ nameStart, nameEnd, index }: { nameStart: string
 
   const { values, setFieldValue } = useFormikContext<CareFormValues>();
   const acts = values?.cares?.[index]?.acts;
-  const dates = useMemo(() => acts?.map((a) => format(a.plannedOn, "dd/MM/yyyy")), [acts?.length]);
+  const dates = useMemo(() => acts?.map((a) => format(a.plannedOn, "dd/MM/yyyy")), [acts]);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
@@ -419,7 +419,7 @@ function DateRangePickerField({ nameStart, nameEnd, index }: { nameStart: string
 }
 
 function RadioButtonBankHoliday({ name }: { name: string }) {
-  const [field, _, helpers] = useField({ name });
+  const [_, meta, helpers] = useField({ name });
 
   return (
     <FormControl component="fieldset">
@@ -433,6 +433,7 @@ function RadioButtonBankHoliday({ name }: { name: string }) {
         <FormControlLabel value="register" control={<Radio />} label="Enregister l'acte" />
         <FormControlLabel value="postpone" control={<Radio />} label="Reporter l'acte au lendemain" />
       </RadioGroup>
+      {meta.error}
     </FormControl>
   );
 }
