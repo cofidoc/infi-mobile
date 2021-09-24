@@ -9,7 +9,6 @@ import { useGetOrdonnances } from "./api";
 export function Care() {
   const { ordonnances } = useGetOrdonnances();
 
-  console.log({ ordonnances });
   return (
     <>
       <Box pb="6em">
@@ -23,10 +22,15 @@ export function Care() {
 }
 
 function OrdoItem({ ordonnance }: { ordonnance: OrdonnanceType }) {
+  const status = getStatus(ordonnance?.cares?.[0]);
+
   return (
     <Paper sx={{ px: 1, py: 2, my: 1, mx: 1 }}>
       <Box sx={{ display: "flex", justifyContent: "space-between" }}>
-        <Typography>En Cours</Typography>
+        <Box sx={{ display: "flex" }}>
+          <Status type={status}>{status}</Status>
+        </Box>
+
         <Typography>
           {ordonnance.nbActsDo || 0}/{ordonnance.nbTotalActs || 0}
         </Typography>
@@ -86,7 +90,7 @@ function getBackgroundByType(type: ActStatusType) {
     case "notStarted":
       return "grey";
     case "pending":
-      return "success";
+      return "green";
     case "over":
       return "orange";
     default:
@@ -97,7 +101,7 @@ function getBackgroundByType(type: ActStatusType) {
 function Status({ children, type }: StatusProps) {
   return (
     <Box sx={{ bgcolor: getBackgroundByType(type), p: "2px 6px", borderRadius: "5px" }}>
-      <Typography color="#FFF">{children}</Typography>
+      <Typography color="white">{children}</Typography>
     </Box>
   );
 }

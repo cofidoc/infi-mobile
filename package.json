@@ -35,6 +35,24 @@
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.ts?(x)"
+        ],
+        "rules": {
+          "@typescript-eslint/no-unused-vars": [
+            "warn",
+            {
+              "args": "after-used",
+              "argsIgnorePattern": "^_",
+              "ignoreRestSiblings": true,
+              "varsIgnorePattern": "^_$"
+            }
+          ]
+        }
+      }
     ]
   },
   "browserslist": {
