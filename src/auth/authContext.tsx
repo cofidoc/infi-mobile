@@ -55,7 +55,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         history.push("/login");
       }
     });
-  }, [history]);
+  }, [history, location.pathname]);
 
   if (openModal)
     return (

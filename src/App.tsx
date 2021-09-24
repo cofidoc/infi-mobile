@@ -4,21 +4,13 @@ import { AuthRoutes } from "./auth/Auth";
 import { AuthProvider } from "./auth/authContext";
 import { Home } from "./Home";
 import { UpdateOffice } from "./office/UpdateOffice";
-import { Patient } from "./patients/Patient";
-import { CreatePatient } from "./patients/CreatePatient";
-import { Patients } from "./patients/Patients";
+import { Patient } from "./patient/Patient";
+import { CreatePatient } from "./patient/CreatePatient";
+import { Patients } from "./patient/Patients";
 import { Header } from "./ui/Header";
 import { CreateCare } from "./care/CreateCare";
 import { ShowCare } from "./care/ShowCare";
-
-function Rounds() {
-  return (
-    <>
-      <Header text="Tournées" />
-      <Box p={2}>Tournesss</Box>
-    </>
-  );
-}
+import { Rounds } from "./round/Rounds";
 
 function OfficeMembers() {
   return (
