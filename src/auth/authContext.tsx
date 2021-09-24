@@ -1,13 +1,7 @@
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db } from "../firebase";
-import {
-  ReactNode,
-  useContext,
-  useEffect,
-  useState,
-  createContext,
-} from "react";
+import { ReactNode, useContext, useEffect, useState, createContext } from "react";
 import { doc, getDoc } from "@firebase/firestore";
 import { Box } from "@mui/system";
 import { Button, Typography } from "@mui/material";
@@ -35,6 +29,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User>();
   const [openModal, setOpenModal] = useState(false);
   const history = useHistory();
+  const location = useLocation();
 
   useEffect(() => {
     return onAuthStateChanged(auth, async (user) => {
@@ -47,7 +42,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
         if (_user.officeIds?.length === 1) {
           const _officeId = _user.officeIds[0];
-          history.push(`/offices/${_officeId}`);
+
+          if (location.pathname === "/login") {
+            history.push(`/offices/${_officeId}`);
+          }
         } else {
           setOpenModal(true);
         }
@@ -87,7 +85,5 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       </Box>
     );
 
-  return (
-    <authContext.Provider value={{ user }}>{children}</authContext.Provider>
-  );
+  return <authContext.Provider value={{ user }}>{children}</authContext.Provider>;
 }

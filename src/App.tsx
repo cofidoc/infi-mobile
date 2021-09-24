@@ -9,6 +9,7 @@ import { CreatePatient } from "./patients/CreatePatient";
 import { Patients } from "./patients/Patients";
 import { Header } from "./ui/Header";
 import { CreateCare } from "./care/CreateCare";
+import { ShowCare } from "./care/ShowCare";
 
 function Rounds() {
   return (
@@ -72,9 +73,14 @@ export default function App() {
           <Route path="/offices/:officeId/patients/create">
             <CreatePatient />
           </Route>
-          <Route path="/offices/:officeId/patients/:patientId/care/create">
+
+          <Route path="/offices/:officeId/patients/:patientId/ordonnances/:ordonnanceId/show">
+            <ShowCare />
+          </Route>
+          <Route path="/offices/:officeId/patients/:patientId/ordonnances/create">
             <CreateCare />
           </Route>
+
           <Route path="/offices/:officeId/patients/:patientId">
             <Patient />
           </Route>

@@ -1,6 +1,6 @@
 import { Box, Tabs, Tab } from "@mui/material";
 import { useState } from "react";
-import { Care } from "../care/Care";
+import { ListCares } from "../care/ListCares";
 import { Header } from "../ui/Header";
 import { UpdatePatient } from "./UpdatePatient";
 
@@ -22,7 +22,7 @@ export function Patient() {
           <Tab value="infos" label="Infos" />
         </Tabs>
       </Box>
-      {value === "care" && <Care />}
+      {value === "care" && <ListCares />}
       {value === "infos" && <UpdatePatient />}
     </>
   );

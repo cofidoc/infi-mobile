@@ -5,18 +5,22 @@ import { Paper, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import { compareAsc, isWithinInterval, format } from "date-fns";
 import { useGetOrdonnances } from "./api";
+import { Link, useRouteMatch } from "react-router-dom";
 
-export function Care() {
+export function ListCares() {
   const { ordonnances } = useGetOrdonnances();
+  const { url } = useRouteMatch();
 
   return (
     <>
       <Box pb="6em">
         {ordonnances?.map((ordonnance) => (
-          <OrdoItem key={ordonnance.id} ordonnance={ordonnance} />
+          <Link key={ordonnance.id} to={`${url}/ordonnances/${ordonnance.id}/show`}>
+            <OrdoItem ordonnance={ordonnance} />
+          </Link>
         ))}
       </Box>
-      <AddLink to="/care/create" />
+      <AddLink to="/ordonnances/create" />
     </>
   );
 }
@@ -43,14 +47,14 @@ function OrdoItem({ ordonnance }: { ordonnance: OrdonnanceType }) {
           }`;
 
           return (
-            <>
+            <Box key={care.id}>
               <Typography fontWeight="bold">
                 {`${cutString(care?.quotation?.name, 25)} (${care?.quotation?.keyLetter?.label} ${
                   care?.quotation?.coefficient?.value
                 })`}
               </Typography>
 
-              <Typography fontWeight="bold">{date}</Typography>
+              <Typography>{date}</Typography>
 
               <Box sx={{ display: "flex" }}>
                 {care.morning && <Tag>Matin</Tag>}
@@ -58,7 +62,7 @@ function OrdoItem({ ordonnance }: { ordonnance: OrdonnanceType }) {
                 {care.afternoon && <Tag>Après-midi</Tag>}
                 {care.night && <Tag>Soir</Tag>}
               </Box>
-            </>
+            </Box>
           );
         })}
       </Box>
@@ -68,8 +72,8 @@ function OrdoItem({ ordonnance }: { ordonnance: OrdonnanceType }) {
 
 function Tag({ children }: { children: ReactNode }) {
   return (
-    <Box mr={1} px="5px" py="2px" sx={{ backgroundColor: "#3a77e7", borderRadius: 2 }}>
-      <Typography color="white">{children}</Typography>
+    <Box mr={1} px="5px" py="2px" sx={{ backgroundColor: "#eee", borderRadius: 2 }}>
+      <Typography color="#000">{children}</Typography>
     </Box>
   );
 }
