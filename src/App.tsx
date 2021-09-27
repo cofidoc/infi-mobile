@@ -42,53 +42,53 @@ function Transmissions() {
 
 export default function App() {
   return (
-    // <ErrorBoundary>
-    <Router>
-      <AuthProvider>
-        <Switch>
-          <Route path="/offices/:officeId/office-members">
-            <OfficeMembers />
-          </Route>
-          <Route path="/offices/:officeId/office">
-            <UpdateOffice />
-          </Route>
-          <Route path="/offices/:officeId/rounds">
-            <Rounds />
-          </Route>
+    <ErrorBoundary>
+      <Router>
+        <AuthProvider>
+          <Switch>
+            <Route path="/offices/:officeId/office-members">
+              <OfficeMembers />
+            </Route>
+            <Route path="/offices/:officeId/office">
+              <UpdateOffice />
+            </Route>
+            <Route path="/offices/:officeId/rounds">
+              <Rounds />
+            </Route>
 
-          <Route path="/offices/:officeId/transmissions">
-            <Transmissions />
-          </Route>
+            <Route path="/offices/:officeId/transmissions">
+              <Transmissions />
+            </Route>
 
-          <Route path="/offices/:officeId/billings">
-            <Billing />
-          </Route>
+            <Route path="/offices/:officeId/billings">
+              <Billing />
+            </Route>
 
-          <Route path="/offices/:officeId/patients/create">
-            <CreatePatient />
-          </Route>
+            <Route path="/offices/:officeId/patients/create">
+              <CreatePatient />
+            </Route>
 
-          <Route path="/offices/:officeId/patients/:patientId/ordonnances/:ordonnanceId/show">
-            <ShowCare />
-          </Route>
-          <Route path="/offices/:officeId/patients/:patientId/ordonnances/create">
-            <CreateCare />
-          </Route>
+            <Route path="/offices/:officeId/patients/:patientId/ordonnances/:ordonnanceId/show">
+              <ShowCare />
+            </Route>
+            <Route path="/offices/:officeId/patients/:patientId/ordonnances/create">
+              <CreateCare />
+            </Route>
 
-          <Route path="/offices/:officeId/patients/:patientId">
-            <Patient />
-          </Route>
-          <Route path="/offices/:officeId/patients">
-            <Patients />
-          </Route>
+            <Route path="/offices/:officeId/patients/:patientId">
+              <Patient />
+            </Route>
+            <Route path="/offices/:officeId/patients">
+              <Patients />
+            </Route>
 
-          <Route path="/offices/:officeId" exact>
-            <Home />
-          </Route>
-        </Switch>
-        <AuthRoutes />
-      </AuthProvider>
-    </Router>
-    // </ErrorBoundary>
+            <Route path="/offices/:officeId" exact>
+              <Home />
+            </Route>
+          </Switch>
+          <AuthRoutes />
+        </AuthProvider>
+      </Router>
+    </ErrorBoundary>
   );
 }
