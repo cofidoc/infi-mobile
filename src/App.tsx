@@ -11,6 +11,7 @@ import { Header } from "./ui/Header";
 import { CreateCare } from "./care/CreateCare";
 import { ShowCare } from "./care/ShowCare";
 import { Rounds } from "./round/Rounds";
+import { ErrorBoundary } from "./ui/ErrorBoundary";
 
 function OfficeMembers() {
   return (
@@ -41,6 +42,7 @@ function Transmissions() {
 
 export default function App() {
   return (
+    // <ErrorBoundary>
     <Router>
       <AuthProvider>
         <Switch>
@@ -87,5 +89,6 @@ export default function App() {
         <AuthRoutes />
       </AuthProvider>
     </Router>
+    // </ErrorBoundary>
   );
 }

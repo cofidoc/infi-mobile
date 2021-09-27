@@ -16,8 +16,8 @@ export function Home() {
 
   return (
     <div>
-      <IconButton aria-label="open drawer" onClick={() => setOpen((o) => !o)}>
-        <MenuIcon />
+      <IconButton aria-label="open drawer" size="large" onClick={() => setOpen((o) => !o)}>
+        <MenuIcon fontSize="large" />
       </IconButton>
 
       <SwipeableDrawer anchor="left" open={open} onClose={() => setOpen(false)} onOpen={() => setOpen(true)}>

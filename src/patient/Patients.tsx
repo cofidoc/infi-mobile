@@ -10,20 +10,14 @@ import { StickyTree } from "react-virtualized-sticky-tree";
 import { groupBy, uniq, sortBy } from "lodash";
 import { Link, useRouteMatch } from "react-router-dom";
 import { PatientType } from "../types";
+import { useMemo } from "react";
 
 function useGetPatients() {
   const { officeId } = useParams<{ officeId: string }>();
-  const { data: patients } = useSWR<PatientType[]>(
-    `/offices/${officeId}/patients`,
-    async () => {
-      const docSnap = await getDocs(
-        collection(db, `/offices/${officeId}/patients`)
-      );
-      return docSnap.docs.map(
-        (d) => ({ id: d.id, ...d.data() } as PatientType)
-      );
-    }
-  );
+  const { data: patients } = useSWR<PatientType[]>(`/offices/${officeId}/patients`, async () => {
+    const docSnap = await getDocs(collection(db, `/offices/${officeId}/patients`));
+    return docSnap.docs.map((d) => ({ id: d.id, ...d.data() } as PatientType));
+  });
   return { patients };
 }
 
@@ -38,12 +32,8 @@ export function Patients() {
         <Box p={1} />
         <SectionList
           data={patients}
-          transformBy={(patient) =>
-            patient.firstname.substring(0, 1).toUpperCase()
-          }
-          getDisplayRow={(patient) =>
-            `${patient?.firstname} ${patient?.lastname}`
-          }
+          transformBy={(patient) => patient.firstname.substring(0, 1).toUpperCase()}
+          getDisplayRow={(patient) => `${patient?.firstname} ${patient?.lastname}`}
         />
         <AddLink to="/create" />
       </Box>
@@ -63,33 +53,37 @@ function SectionList<T extends { id: string }>({
 }) {
   const { url } = useRouteMatch();
 
-  const levelRoot = {
-    root: {
-      children: [...(sortBy(uniq(data?.map(transformBy))) || [])],
-      depth: 0,
-    },
-  };
-
-  const level1 = Object.entries(groupBy(data, transformBy))
-    .map(([key, value]) => ({
-      name: key,
-      children: (value as T[]).map((v: T) => v.id),
-      depth: 1,
-    }))
-    ?.reduce((a, b) => ({ ...a, [b.name]: b }), {});
-
-  const level2 = data?.reduce((a: T, b: T) => {
-    return {
-      ...a,
-      [String(b.id)]: { ...b, name: getDisplayRow(b), depth: 2 },
+  const tree = useMemo(() => {
+    const levelRoot = {
+      root: {
+        children: [...(sortBy(uniq(data?.map(transformBy))) || [])],
+        depth: 0,
+      },
     };
-  }, {} as any);
 
-  const tree: any = {
-    ...levelRoot,
-    ...level1,
-    ...level2,
-  };
+    const level1 = Object.entries(groupBy(data, transformBy))
+      .map(([key, value]) => ({
+        name: key,
+        children: (value as T[]).map((v: T) => v.id),
+        depth: 1,
+      }))
+      ?.reduce((a, b) => ({ ...a, [b.name]: b }), {});
+
+    const level2 = data?.reduce((a: T, b: T) => {
+      return {
+        ...a,
+        [String(b.id)]: { ...b, name: getDisplayRow(b), depth: 2 },
+      };
+    }, {} as any);
+
+    const _tree: any = {
+      ...levelRoot,
+      ...level1,
+      ...level2,
+    };
+
+    return _tree;
+  }, [data, transformBy, getDisplayRow]);
 
   const getChildren = (id: any) => {
     if (tree[id].children) {

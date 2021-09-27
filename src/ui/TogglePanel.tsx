@@ -1,6 +1,6 @@
 import { ReactNode, useState } from "react";
-import { Box, IconButton } from "@mui/material";
-import { ArrowDropDownCircle } from "@mui/icons-material";
+import { Box, IconButton, Collapse } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
 export function TogglePanel({ title, children }: { title: ReactNode; children: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -16,10 +16,12 @@ export function TogglePanel({ title, children }: { title: ReactNode; children: R
       >
         {title}
         <IconButton>
-          <ArrowDropDownCircle />
+          <Box sx={{ transform: `rotate(${open ? "180deg" : "0deg"})`, transition: "transform 0.2s ease-out" }}>
+            <KeyboardArrowDownIcon />
+          </Box>
         </IconButton>
       </Box>
-      {open && children}
+      <Collapse in={open}>{children}</Collapse>
     </>
   );
 }

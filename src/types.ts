@@ -3,6 +3,10 @@ export type PatientType = {
   socialSecurityNumber: number;
   firstname: string;
   lastname: string;
+  birth: Date;
+  phoneNumber: string;
+  relocation: Relocation;
+  kmSupp: number;
 };
 
 export type OfficeType = {
@@ -99,13 +103,20 @@ export type Increase = {
   unitPriceDom: number;
 };
 
+export type Relocation = {
+  id: string;
+  label: string;
+  unitPrice: number;
+  unitPriceDom: number;
+};
+
 export type Time = "morning" | "midday" | "afternoon" | "night";
 
-export type Seance = {
+export type SeanceType = {
   id: string;
   patient: PatientType;
   acts: ActType[];
-  haveIk: boolean;
+  ik: "domicile" | "cabinet";
   increases: Increase[];
   price: string;
   time: Time;
@@ -114,4 +125,10 @@ export type Seance = {
   doneBy?: UserType;
   sentToBillingBy?: string;
   dateSentToBilling?: Date;
+};
+
+export type LinkedQuotation = {
+  id: string;
+  linkedQuotations: QuotationType[];
+  quotations: QuotationType[];
 };
