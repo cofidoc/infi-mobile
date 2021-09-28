@@ -3,24 +3,25 @@ import format from "../utils/format";
 import { Box, Typography, IconButton } from "@mui/material";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import { Link } from "react-router-dom";
 
 type DateSelectorProps = {
   date: Date;
-  onChange: (date: Date) => void;
 };
 
-export function DateSelector({ date, onChange }: DateSelectorProps) {
+export function DateSelector({ date }: DateSelectorProps) {
+  const start = format(sub(date, { days: 1 }), "dd-MM-yyyy");
+  const end = format(add(date, { days: 1 }), "dd-MM-yyyy");
+
   return (
     <Box sx={{ display: "flex", alignItems: "center" }}>
-      <IconButton onClick={() => onChange(sub(date, { days: 1 }))}>
+      <IconButton component={Link} replace to={{ search: `date=${start}` }}>
         <ArrowBackIosIcon />
       </IconButton>
-
       <Typography sx={{ textAlign: "center" }} fontWeight="bold" fontSize={16}>
         {format(date, "eeee dd MMMM yyyy")}
       </Typography>
-
-      <IconButton onClick={() => onChange(add(date, { days: 1 }))}>
+      <IconButton component={Link} replace to={{ search: `date=${end}` }}>
         <ArrowForwardIosIcon />
       </IconButton>
     </Box>

@@ -22,15 +22,15 @@ import PhoneIcon from "@mui/icons-material/Phone";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useGetIncreases, useSeanceById } from "./api";
 import { useAuth } from "../auth/authContext";
 import { setDoc, doc, updateDoc } from "@firebase/firestore";
 import { db } from "../firebase";
 import { omit } from "lodash";
-import format from "../utils/format";
 import { iOS } from "../utils/iOS";
+import format from "../utils/format";
 
 export function RoundItem({ round }: { round: RoundType }) {
   const { officeId } = useParams<{ officeId: string }>();
@@ -233,6 +233,7 @@ function Buttons({ patient }: { patient: PatientType }) {
   const isIphone = iOS();
   const address = "44 rue des roches 95540 Mery Sur Oise";
   const phoneNumber = "0134638506";
+  const location = useLocation();
 
   return (
     <Box sx={{ display: "flex", justifyContent: "space-around", alignItems: "center" }} mb={1}>
@@ -252,7 +253,13 @@ function Buttons({ patient }: { patient: PatientType }) {
       <IconButton color="primary" component={Link} to={`/offices/${officeId}/patients/${patient?.id}`}>
         <AccessTimeIcon />
       </IconButton>
-      <IconButton color="primary" component={Link} to={`/offices/${officeId}/patients/${patient?.id}`}>
+      <IconButton
+        color="primary"
+        component={Link}
+        to={`/offices/${officeId}/patients/${patient?.id}/ordonnances/create-one${
+          location.search || `?date=${format(new Date(), "dd-MM-yyyy")}`
+        }`}
+      >
         <AddCircleIcon />
       </IconButton>
     </Box>

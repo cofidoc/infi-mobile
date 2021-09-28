@@ -41,13 +41,13 @@ function OrdoItem({ ordonnance }: { ordonnance: OrdonnanceType }) {
       </Box>
 
       <Box>
-        {ordonnance?.cares?.map((care) => {
+        {ordonnance?.cares?.map((care, index) => {
           const date = `${care.start ? format(care.start, "d MMM yyyy") : ""} - ${
             care.end ? format(care.end, "d MMM yyyy") : ""
           }`;
 
           return (
-            <Box key={care.id}>
+            <Box key={care?.quotation?.name + "-" + index}>
               <Typography fontWeight="bold">
                 {`${cutString(care?.quotation?.name, 25)} (${care?.quotation?.keyLetter?.label} ${
                   care?.quotation?.coefficient?.value

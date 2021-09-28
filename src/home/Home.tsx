@@ -2,17 +2,18 @@ import { ReactNode, useState } from "react";
 import { IconButton, SwipeableDrawer } from "@material-ui/core";
 import MenuIcon from "@mui/icons-material/Menu";
 import { Box, Button, Typography } from "@mui/material";
-import { Link, LinkProps, useRouteMatch, useParams } from "react-router-dom";
+import { Link, LinkProps, useRouteMatch, useParams, useHistory } from "react-router-dom";
 import { signOut } from "@firebase/auth";
-import { auth } from "./firebase";
-import { useGetOfficeById } from "./office/api";
-import { useAuth } from "./auth/authContext";
+import { auth } from "../firebase";
+import { useGetOfficeById } from "../office/api";
+import { useAuth } from "../auth/authContext";
 
 export function Home() {
   const [open, setOpen] = useState(false);
   const { officeId } = useParams<{ officeId: string }>();
   const { office } = useGetOfficeById(officeId);
   const { user } = useAuth();
+  const history = useHistory();
 
   return (
     <div>
@@ -36,6 +37,7 @@ export function Home() {
               onClick={async () => {
                 try {
                   await signOut(auth);
+                  history.push("/login");
                 } catch (err) {
                   console.error(err);
                 }

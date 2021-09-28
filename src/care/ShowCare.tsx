@@ -143,7 +143,6 @@ function CareItem({ care }: { care: CareType }) {
 
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <StaticDateRangePicker
-          readOnly={true}
           toolbarTitle=""
           toolbarFormat="d MMM"
           inputFormat="dd/MM/yyyy"

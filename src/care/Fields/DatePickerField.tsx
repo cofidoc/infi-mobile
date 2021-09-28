@@ -8,7 +8,7 @@ export function DatePickerField({ name, label }: { name: string; label: string }
   const [field, _, helpers] = useField({ name });
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} locale="fr">
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
       <MobileDatePicker
         label={label}
         value={field.value}

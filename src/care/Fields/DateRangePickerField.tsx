@@ -1,5 +1,5 @@
-import { useState, useMemo } from "react";
-import { useFormikContext } from "formik";
+import { useMemo } from "react";
+import { useField, useFormikContext } from "formik";
 import { Box, TextField } from "@mui/material";
 import StaticDateRangePicker from "@mui/lab/StaticDateRangePicker";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
@@ -15,9 +15,10 @@ type DateRangePickerFieldProps = {
 };
 
 export function DateRangePickerField({ nameStart, nameEnd, index }: DateRangePickerFieldProps) {
-  const [value, setValue] = useState([null, null] as any);
+  const [fieldStart, , helpersStart] = useField<Date>({ name: nameStart });
+  const [fieldEnd, , helpersEnd] = useField<Date>({ name: nameEnd });
 
-  const { values, setFieldValue } = useFormikContext<CareFormValues>();
+  const { values } = useFormikContext<CareFormValues>();
   const acts = values?.cares?.[index]?.acts;
   const dates = useMemo(() => acts?.map((a) => format(a.plannedOn, "dd/MM/yyyy")), [acts]);
 
@@ -28,11 +29,10 @@ export function DateRangePickerField({ nameStart, nameEnd, index }: DateRangePic
         toolbarFormat="d MMM"
         startText="Debut du Soin"
         endText="Fin du Soin"
-        value={value}
+        value={[fieldStart.value || null, fieldEnd.value || null] as any}
         onChange={(newValue: any) => {
-          setValue(newValue);
-          setFieldValue(nameStart, newValue?.[0]);
-          setFieldValue(nameEnd, newValue?.[1]);
+          helpersStart.setValue(newValue?.[0]);
+          helpersEnd.setValue(newValue?.[1]);
         }}
         inputFormat="dd/MM/yyyy"
         renderDay={(date: Date, dateRangePickerDayProps) => {

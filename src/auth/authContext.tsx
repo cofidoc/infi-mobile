@@ -52,7 +52,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } else {
         // User is signed out
         setUser(undefined);
-        history.push("/login");
       }
     });
   }, [history, location.pathname]);
