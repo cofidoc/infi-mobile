@@ -13,7 +13,7 @@ import StaticDateRangePicker from "@mui/lab/StaticDateRangePicker";
 import DateRangePickerDay from "@mui/lab/DateRangePickerDay";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
-import { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 import { CareType, OrdonnanceType } from "../types";
 import { Formik, Form, FieldArray } from "formik";
 import { DatePickerField } from "./Fields/DatePickerField";
@@ -25,14 +25,11 @@ export function ShowCare() {
   return (
     <>
       <Header text="Ordonnance" />
-
       <Box p={1} pb="5em" sx={{ display: "flex", flexDirection: "column" }}>
         <PicturesForm pictures={ordonnance?.pictures} />
-
         {ordonnance?.cares?.map((care) => (
           <CareItem key={care.id} care={care} />
         ))}
-
         <Button variant="contained" color="error">
           Supprimer l'ordonnance
         </Button>
@@ -45,24 +42,32 @@ function PicturesForm({ pictures }: { pictures?: OrdonnanceType["pictures"] }) {
   const { officeId, patientId, ordonnanceId } =
     useParams<{ officeId: string; patientId: string; ordonnanceId: string }>();
   const { mutate } = useGetOrdonnance();
-
-  const uploadOrdonnance = async (e: any) => {
-    const files = e?.target?.files || [];
-
-    for (const file of files) {
-      const path = `/offices/${officeId}/ordonnances/${uuid()}-${file.name}`;
-      const storageRef = ref(storage, path);
-      await uploadBytes(storageRef, file);
-      const picturesToAdd = [...(pictures || []), { path }];
-      await updateDoc(doc(db, `/offices/${officeId}/patients/${patientId}/ordonnances/`, ordonnanceId), {
-        pictures: picturesToAdd,
-      });
-      mutate();
-    }
-  };
+  const [loading, setLoading] = useState(false);
 
   const initialValues = {
     pictures: pictures?.map((p) => ({ ...p, date: p?.date ? new Date((p?.date as any)?.seconds * 1000) : null })),
+  };
+
+  const uploadOrdonnance = async (e: any) => {
+    try {
+      setLoading(true);
+      const files = e?.target?.files || [];
+
+      for (const file of files) {
+        const path = `/offices/${officeId}/ordonnances/${uuid()}-${file.name}`;
+        const storageRef = ref(storage, path);
+        await uploadBytes(storageRef, file);
+        const picturesToAdd = [...(pictures || []), { path }];
+        await updateDoc(doc(db, `/offices/${officeId}/patients/${patientId}/ordonnances/`, ordonnanceId), {
+          pictures: picturesToAdd,
+        });
+        mutate();
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -84,14 +89,18 @@ function PicturesForm({ pictures }: { pictures?: OrdonnanceType["pictures"] }) {
           <Paper sx={{ px: 1, py: 2, mb: 2 }}>
             <Typography>Impoter vos ordonnances ou prenez les en photos</Typography>
 
-            <ImportPictures onChange={uploadOrdonnance} />
+            <ImportPictures loading={loading} onChange={uploadOrdonnance} />
 
             <FieldArray
               name="pictures"
               render={(arrayHelpers) => (
                 <Box>
                   {pictures?.map((p, index) => (
-                    <Box mb={2} sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <Box
+                      key={p.path}
+                      mb={2}
+                      sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}
+                    >
                       <ImgStorage path={p.path} />
                       <DatePickerField name={`pictures.${index}.date`} label="Date de l'ordonnance" />
                       <IconButton onClick={() => arrayHelpers.remove(index)}>

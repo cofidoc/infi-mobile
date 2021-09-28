@@ -1,8 +1,14 @@
 import { Box, IconButton } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import PhotoCamera from "@mui/icons-material/PhotoCamera";
+import LoadingButton from "@mui/lab/LoadingButton";
 
-export function ImportPictures({ onChange }: { onChange: (e: any) => void }) {
+type ImportPicturesProps = {
+  loading?: boolean;
+  onChange: (e: any) => void;
+};
+
+export function ImportPictures({ loading, onChange }: ImportPicturesProps) {
   return (
     <Box sx={{ display: "flex", justifyContent: "space-around" }}>
       <label htmlFor="icon-button-file">
@@ -14,9 +20,9 @@ export function ImportPictures({ onChange }: { onChange: (e: any) => void }) {
           style={{ display: "none" }}
           onChange={onChange}
         />
-        <IconButton size="large" component="span">
+        <LoadingButton size="large" component="span" loading={loading}>
           <FileDownloadIcon />
-        </IconButton>
+        </LoadingButton>
       </label>
       <label htmlFor="icon-button-camera">
         <input
@@ -28,9 +34,9 @@ export function ImportPictures({ onChange }: { onChange: (e: any) => void }) {
           style={{ display: "none" }}
           onChange={onChange}
         />
-        <IconButton size="large" component="span">
+        <LoadingButton size="large" component="span" loading={loading}>
           <PhotoCamera />
-        </IconButton>
+        </LoadingButton>
       </label>
     </Box>
   );

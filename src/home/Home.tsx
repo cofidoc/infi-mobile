@@ -7,6 +7,7 @@ import { signOut } from "@firebase/auth";
 import { auth } from "../firebase";
 import { useGetOfficeById } from "../office/api";
 import { useAuth } from "../auth/authContext";
+import { capitalize } from "lodash";
 
 export function Home() {
   const [open, setOpen] = useState(false);
@@ -58,15 +59,15 @@ export function Home() {
         }}
       >
         <Box>
-          <Typography px={2} textAlign="center" fontWeight="bold" fontSize={18}>
-            {office?.name}
+          <Typography px={2} textAlign="center" fontWeight="bold" fontSize={22} component="h1">
+            {capitalize(office?.name)}
           </Typography>
-          <Typography px={2} textAlign="center" fontSize={12}>
-            {office?.address}, {office?.zipCode} {office?.city}
+          <Typography px={2} textAlign="center" fontSize={16} component="h2">
+            {office?.address} <br /> {office?.zipCode} {office?.city}
           </Typography>
 
           <Typography p={2} textAlign="center" sx={{ fontWeight: "bold" }}>
-            {`Bienvenue, ${user?.firstname} ${user?.lastname}`}
+            {`Bienvenue ${capitalize(user?.firstname)} ${capitalize(user?.lastname)}`}
           </Typography>
         </Box>
 
