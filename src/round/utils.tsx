@@ -1,6 +1,7 @@
-import { isSunday } from "date-fns";
+import { isSunday, parse } from "date-fns";
 import { sum, groupBy } from "lodash";
 import { ActType, Increase, PatientType, Time, LinkedQuotation } from "../types";
+import { useLocation } from "react-router-dom";
 
 export type RoundType = {
   id: string;
@@ -118,4 +119,11 @@ export function getAge(date?: Date) {
   let diff = Date.now() - date?.getTime();
   let age = new Date(diff);
   return Math.abs(age.getUTCFullYear() - 1970);
+}
+
+export function useGetDateQueryParams() {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const date = searchParams.get("date") ? parse(searchParams.get("date") || "", "dd-MM-yyyy", new Date()) : new Date();
+  return date;
 }

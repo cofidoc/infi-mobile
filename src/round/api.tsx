@@ -6,13 +6,15 @@ import { collection, query, where, getDocs, onSnapshot, doc } from "firebase/fir
 import { db } from "../firebase";
 import { ActType, Increase, SeanceType } from "../types";
 import { Timestamp } from "firebase/firestore";
+import { useGetDateQueryParams } from "./utils";
 
 export type ActFirebase = Omit<ActType, "plannedOn"> & { plannedOn: Timestamp };
 
-export function useGetActsByDate(day: Date) {
+export function useGetActsByDate() {
+  const date = useGetDateQueryParams();
   const { officeId } = useParams<{ officeId: string }>();
-  const start = set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, day);
-  const end = add({ days: 1 }, set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, day));
+  const start = set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, date);
+  const end = add({ days: 1 }, set({ hours: 0, minutes: 0, seconds: 0, milliseconds: 0 }, date));
 
   const { data, ...props } = useSWR<ActFirebase[]>(
     `/offices/${officeId}/acts?start=${start.toDateString()}&end=${end.toDateString()}`,
