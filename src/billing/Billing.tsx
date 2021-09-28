@@ -79,7 +79,7 @@ export function Billing() {
           ))}
         </Box>
 
-        <Box sx={{ display: "flex", flexDirection: "column", height: "10%", justifyContent: "center" }}>
+        <Box sx={{ display: "flex", height: "10%", alignItems: "center", justifyContent: "center" }}>
           <Button variant="contained" onClick={sendToBilling}>
             Envoi pour facturation
           </Button>

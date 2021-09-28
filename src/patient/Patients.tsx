@@ -27,7 +27,7 @@ export function Patients() {
   return (
     <Box height="100vh">
       <Header text="Patients" />
-      <Box px={2}>
+      <Box px={2} sx={{ height: "calc(100% - 56px)" }}>
         <SearchField />
         <Box p={1} />
         <SectionList

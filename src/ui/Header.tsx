@@ -10,6 +10,7 @@ export function Header({ text }: { text: string }) {
         alignItems: "center",
         position: "relative",
         py: 2,
+        height: "56px",
       }}
     >
       <Box sx={{ position: "absolute", left: 0 }}>
