@@ -1,3 +1,4 @@
+// Patient
 export type PatientType = {
   id: string;
   socialSecurityNumber: number;
@@ -9,6 +10,7 @@ export type PatientType = {
   kmSupp: number;
 };
 
+// Cabinet
 export type OfficeType = {
   name: string;
   finess: string;
@@ -24,6 +26,7 @@ export type UserType = {
   officeIds: string[];
 };
 
+// Ordonnance
 export type OrdonnanceType = {
   id: string;
   cares: CareType[];
@@ -36,6 +39,7 @@ export type OrdonnanceType = {
   nbActsDo?: number;
 };
 
+// Soin
 export type CareType = {
   id: string;
   start: Date;
@@ -65,6 +69,7 @@ export type CareType = {
   sunday?: boolean;
 };
 
+// Act
 export type ActType = {
   id: string;
   idCare: string;
@@ -76,6 +81,7 @@ export type ActType = {
   comment?: string;
 };
 
+// Cotation
 export type QuotationType = {
   id: string;
   name: string;
@@ -84,6 +90,7 @@ export type QuotationType = {
   increase: Increase;
 };
 
+// Lettre Clé
 export type KeyLetter = {
   id: string;
   label: string;
@@ -91,11 +98,13 @@ export type KeyLetter = {
   unitPriceDom: number;
 };
 
+// Coefficient
 export type Coefficient = {
   id: string;
   value: number;
 };
 
+// Majoration
 export type Increase = {
   id: string;
   label: string;
@@ -103,6 +112,7 @@ export type Increase = {
   unitPriceDom: number;
 };
 
+// frais kilometrique
 export type Relocation = {
   id: string;
   label: string;
@@ -110,8 +120,10 @@ export type Relocation = {
   unitPriceDom: number;
 };
 
+// Moment de la journée
 export type Time = "morning" | "midday" | "afternoon" | "night";
 
+// séance
 export type SeanceType = {
   id: string;
   patient: PatientType;
@@ -127,6 +139,7 @@ export type SeanceType = {
   dateSentToBilling?: Date;
 };
 
+// cotataion liée
 export type LinkedQuotation = {
   id: string;
   linkedQuotations: QuotationType[];
