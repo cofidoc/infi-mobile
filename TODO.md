@@ -1,0 +1,6 @@
+- sync patient
+- add infos patient
+- transmissions
+- gestion office member
+- security roles
+- design
