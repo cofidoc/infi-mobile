@@ -49,6 +49,8 @@ export function FormPatient({ labelSubmit, ...props }: FormPatientProps) {
     ref.current.emit("getCaptcha", { username, password, captcha, nir });
   };
 
+  console.log({ patients });
+
   return (
     <Formik {...props}>
       {({ isSubmitting }) => (
