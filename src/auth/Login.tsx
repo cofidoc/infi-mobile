@@ -2,11 +2,7 @@ import { Box, Button, TextField, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import logo from "../assets/images/cofidoc-black.png";
-import {
-  signInWithEmailAndPassword,
-  setPersistence,
-  browserSessionPersistence,
-} from "firebase/auth";
+import { signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from "firebase/auth";
 import { auth } from "../firebase";
 import { ErrorField } from "../ui/ErrorField";
 
@@ -22,9 +18,7 @@ export function Login() {
           const errors: any = {};
           if (!values.email) {
             errors.email = "Required";
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
+          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
             errors.email = "Invalid email address";
           }
           return errors;
@@ -32,7 +26,7 @@ export function Login() {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             const { email, password } = values;
-            setPersistence(auth, browserSessionPersistence);
+            setPersistence(auth, browserLocalPersistence);
             await signInWithEmailAndPassword(auth, email, password);
           } catch (err) {
             console.error(err);
@@ -44,20 +38,10 @@ export function Login() {
         {({ isSubmitting }) => (
           <Form>
             <Box sx={{ display: "flex", flexDirection: "column", p: 3 }}>
-              <Field
-                type="email"
-                name="email"
-                as={TextField}
-                variant="filled"
-              />
+              <Field type="email" name="email" as={TextField} variant="filled" />
               <ErrorMessage name="email" component={ErrorField} />
 
-              <Field
-                type="password"
-                name="password"
-                as={TextField}
-                variant="filled"
-              />
+              <Field type="password" name="password" as={TextField} variant="filled" />
               <ErrorMessage name="password" component={ErrorField} />
               <Button type="submit" variant="text" disabled={isSubmitting}>
                 Connexion
