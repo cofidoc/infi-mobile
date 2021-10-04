@@ -72,8 +72,8 @@ export function App() {
                 <Route path="/" exact>
                   <Redirect to="/login" />
                 </Route>
+                <AuthRoutes />
               </Switch>
-              <AuthRoutes />
             </AuthProvider>
           </Router>
         </ThemeProvider>

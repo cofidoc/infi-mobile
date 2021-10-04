@@ -2,24 +2,11 @@ import { Box } from "@mui/material";
 import { Header } from "../ui/Header";
 import { AddLink } from "../ui/AddLink";
 import { SearchField } from "../ui/SearchField";
-import useSWR from "swr";
-import { useParams } from "react-router-dom";
-import { collection, getDocs } from "@firebase/firestore";
-import { db } from "../firebase";
 import { StickyTree } from "react-virtualized-sticky-tree";
 import { groupBy, uniq, sortBy } from "lodash";
 import { Link, useRouteMatch } from "react-router-dom";
-import { PatientType } from "../types";
 import { useMemo } from "react";
-
-function useGetPatients() {
-  const { officeId } = useParams<{ officeId: string }>();
-  const { data: patients } = useSWR<PatientType[]>(`/offices/${officeId}/patients`, async () => {
-    const docSnap = await getDocs(collection(db, `/offices/${officeId}/patients`));
-    return docSnap.docs.map((d) => ({ id: d.id, ...d.data() } as PatientType));
-  });
-  return { patients };
-}
+import { useGetPatients } from "./api";
 
 export function Patients() {
   const { patients } = useGetPatients();
