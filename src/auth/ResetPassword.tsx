@@ -8,13 +8,9 @@ export function ResetPassword() {
   const [email, setEmail] = useState("");
   return (
     <>
-      <Header text="Reset Password" />
+      <Header text="Mot de passe oublié" />
       <Box sx={{ display: "flex", flexDirection: "column", p: 2 }}>
-        <TextField
-          label="Email*"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
+        <TextField label="Email*" value={email} onChange={(e) => setEmail(e.target.value)} />
         <Button
           sx={{ mt: 2 }}
           disabled={!email}

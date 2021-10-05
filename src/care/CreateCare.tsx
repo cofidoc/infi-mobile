@@ -13,10 +13,10 @@ export function CreateCare() {
 
   return (
     <>
-      <Header text="Ajouter un soin" />
+      <Header text="Création d'une prescription médicale" />
       <Box p={1}>
         <FormCare
-          labelSubmit="Créer un soin"
+          labelSubmit="Créer la prescription médicale"
           initialValues={{
             cares: [{ everyNDays: 1, morning: true, midday: false, afternoon: false, night: false } as CareType],
             pictures: [],

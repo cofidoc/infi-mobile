@@ -26,7 +26,9 @@ export function Login() {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             const { email, password } = values;
-            setPersistence(auth, browserLocalPersistence);
+            await setPersistence(auth, browserLocalPersistence).catch((e) => {
+              console.error(e);
+            });
             await signInWithEmailAndPassword(auth, email, password);
           } catch (err) {
             console.error(err);
@@ -56,7 +58,7 @@ export function Login() {
           <Typography>Mot de passe oublié (email requis)</Typography>
         </Link>
         <Box py={1} />
-        <Link to="/sign-in">
+        <Link to="/sign-up">
           <Typography>Inscription</Typography>
         </Link>
       </Box>

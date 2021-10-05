@@ -13,7 +13,7 @@ export function SignUp() {
 
   return (
     <Box>
-      <Header text="SignUp" />
+      <Header text="Inscription" />
       <Box sx={{ display: "flex", justifyContent: "center", my: 2 }}>
         <img src={logo} alt="Logo" width="80%" />
       </Box>
@@ -30,14 +30,11 @@ export function SignUp() {
           const errors: any = {};
 
           if (values.password !== values.passwordVerification) {
-            errors.passwordVerification =
-              "les mots de passe doivent être identique";
+            errors.passwordVerification = "les mots de passe doivent être identique";
           }
           if (!values.email) {
             errors.email = "Required";
-          } else if (
-            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-          ) {
+          } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
             errors.email = "Invalid email address";
           }
 
@@ -46,11 +43,7 @@ export function SignUp() {
         onSubmit={async (values, { setSubmitting }) => {
           try {
             const { email, password, firstname, lastname } = values;
-            const userCredential = await createUserWithEmailAndPassword(
-              auth,
-              email,
-              password
-            );
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             if (auth.currentUser)
               await updateProfile(auth.currentUser, {
                 displayName: `${firstname} ${lastname}`,
@@ -71,21 +64,9 @@ export function SignUp() {
         {({ isSubmitting }) => (
           <Form>
             <Box sx={{ display: "flex", flexDirection: "column", p: 3 }}>
-              <Field
-                type="email"
-                name="email"
-                as={TextField}
-                variant="filled"
-                placeholder="Email*"
-              />
+              <Field type="email" name="email" as={TextField} variant="filled" placeholder="Email*" />
               <ErrorMessage name="email" component={ErrorField} />
-              <Field
-                type="password"
-                name="password"
-                as={TextField}
-                variant="filled"
-                placeholder="Mot de passe*"
-              />
+              <Field type="password" name="password" as={TextField} variant="filled" placeholder="Mot de passe*" />
               <ErrorMessage name="password" component={ErrorField} />
               <Field
                 type="password"
@@ -94,22 +75,9 @@ export function SignUp() {
                 variant="filled"
                 placeholder="Mot de passe*"
               />
-              <ErrorMessage
-                name="passwordVerification"
-                component={ErrorField}
-              />
-              <Field
-                name="firstname"
-                as={TextField}
-                variant="filled"
-                placeholder="Prénom*"
-              />
-              <Field
-                name="lastname"
-                as={TextField}
-                variant="filled"
-                placeholder="Nom*"
-              />
+              <ErrorMessage name="passwordVerification" component={ErrorField} />
+              <Field name="firstname" as={TextField} variant="filled" placeholder="Prénom*" />
+              <Field name="lastname" as={TextField} variant="filled" placeholder="Nom*" />
               <Button type="submit" variant="text" disabled={isSubmitting}>
                 Créer mon compte
               </Button>

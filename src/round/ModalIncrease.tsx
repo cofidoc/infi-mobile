@@ -37,6 +37,7 @@ export function ModalIncrease({ open, onClose, increasesInit, onValidate }: Moda
                   key={increase.id}
                   onClick={selectedIncrease(increase)}
                   mb={1}
+                  fontWeight={increasesSelected?.map((i) => i.id)?.includes(increase.id) ? "bold" : "normal"}
                   color={increasesSelected?.map((i) => i.id)?.includes(increase.id) ? "primary.main" : "black"}
                 >
                   {increase.label}

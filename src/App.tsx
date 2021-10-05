@@ -69,10 +69,11 @@ export function App() {
                 <Route path="/offices/:officeId" exact>
                   <Home />
                 </Route>
+                <AuthRoutes />
+
                 <Route path="/" exact>
                   <Redirect to="/login" />
                 </Route>
-                <AuthRoutes />
               </Switch>
             </AuthProvider>
           </Router>

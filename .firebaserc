@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "infi-mobile"
+  },
+  "targets": {
+    "infi-mobile": {
+      "hosting": {
+        "infi-mobile": [
+          "infi-mobile"
+        ],
+        "media-api": [
+          "media-api"
+        ]
+      }
+    }
   }
 }

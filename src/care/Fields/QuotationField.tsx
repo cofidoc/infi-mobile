@@ -87,7 +87,7 @@ export function QuotationField({ name, children }: { name: string; children: Rea
           }}
         >
           <Typography variant="h6" component="h2" mb={2}>
-            Selectionner une cotation
+            Selectionner un traitement
           </Typography>
 
           <SearchField />

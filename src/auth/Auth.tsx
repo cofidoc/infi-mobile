@@ -10,7 +10,7 @@ export function AuthRoutes() {
       <Route path="/login">
         <Login />
       </Route>
-      <Route path="/sign-in">
+      <Route path="/sign-up">
         <SignUp />
       </Route>
       <Route path="/reset-password">
