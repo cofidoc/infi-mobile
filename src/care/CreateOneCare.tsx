@@ -42,7 +42,6 @@ export function CreateOneCare() {
           }}
           onSubmit={async (values) => {
             try {
-              console.log({ values });
               const ordonnance = {
                 ...values,
                 cares: values?.cares?.map((c) => omit(c, "acts")),

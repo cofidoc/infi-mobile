@@ -101,8 +101,6 @@ export function Billing() {
   const { data: seances, mutate } = useGetSeances();
   const [seanceNotToBill, setSeanceNotToBill] = useState<string[]>([]);
 
-  console.log({ seanceNotToBill });
-
   const sendToBilling = async (selected: string[]) => {
     try {
       const seancesToBill =

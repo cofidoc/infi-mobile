@@ -7,6 +7,7 @@ import { TogglePanel } from "../ui/TogglePanel";
 import { Clear } from "@mui/icons-material";
 import { DayOfWeekField } from "./Fields/DayOfWeekField";
 import { GenDayField } from "./Fields/GenDayField";
+import { RadioGroupDay } from "./Fields/RadioGroupDay";
 import { RadioButtonBankHoliday } from "./Fields/RadioButtonBankHoliday";
 import { DateRangePickerField } from "./Fields/DateRangePickerField";
 import { QuotationField } from "./Fields/QuotationField";
@@ -97,22 +98,22 @@ export function FormCare(props: FormPareProps) {
                         <Box py={1} />
                         <RadioButtonBankHoliday name={`cares.${index}.bankHoliday`} />
                         <Box py={1} />
-                        <GenDayField name={`cares.${index}.everyNDays`} />
-                        <Box
-                          mt={2}
-                          sx={{
-                            display: "flex",
-                            justifyContent: "space-around",
-                          }}
-                        >
-                          <DayOfWeekField name={`cares.${index}.monday`} label="L" />
-                          <DayOfWeekField name={`cares.${index}.tuesday`} label="M" />
-                          <DayOfWeekField name={`cares.${index}.wednesday`} label="M" />
-                          <DayOfWeekField name={`cares.${index}.thursday`} label="J" />
-                          <DayOfWeekField name={`cares.${index}.friday`} label="V" />
-                          <DayOfWeekField name={`cares.${index}.saturday`} label="S" />
-                          <DayOfWeekField name={`cares.${index}.sunday`} label="D" />
-                        </Box>
+
+                        <RadioGroupDay
+                          index={index}
+                          renderByNbDay={<GenDayField name={`cares.${index}.everyNDays`} />}
+                          renderByWeek={
+                            <Box mt={2} sx={{ display: "flex", justifyContent: "space-around" }}>
+                              <DayOfWeekField name={`cares.${index}.monday`} label="L" />
+                              <DayOfWeekField name={`cares.${index}.tuesday`} label="M" />
+                              <DayOfWeekField name={`cares.${index}.wednesday`} label="M" />
+                              <DayOfWeekField name={`cares.${index}.thursday`} label="J" />
+                              <DayOfWeekField name={`cares.${index}.friday`} label="V" />
+                              <DayOfWeekField name={`cares.${index}.saturday`} label="S" />
+                              <DayOfWeekField name={`cares.${index}.sunday`} label="D" />
+                            </Box>
+                          }
+                        />
                       </TogglePanel>
                     </Paper>
                   ))}

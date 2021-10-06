@@ -76,7 +76,6 @@ function PicturesForm({ pictures }: { pictures?: OrdonnanceType["pictures"] }) {
       enableReinitialize
       onSubmit={async (values, { setSubmitting }) => {
         try {
-          console.log(values);
           await updateDoc(doc(db, `/offices/${officeId}/patients/${patientId}/ordonnances/`, ordonnanceId), values);
           setSubmitting(false);
         } catch (err) {

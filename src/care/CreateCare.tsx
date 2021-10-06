@@ -23,12 +23,12 @@ export function CreateCare() {
           }}
           onSubmit={async (values) => {
             try {
-              console.log({ values });
               const ordonnance = {
                 ...values,
                 cares: values?.cares?.map((c) => omit(c, "acts")),
                 nbTotalActs: values?.cares?.flatMap((c) => c.acts)?.length || 0,
                 nbActsDo: 0,
+                createdAt: new Date(),
               };
               const docRef = await addDoc(
                 collection(db, `offices/${officeId}/patients/${patientId}/ordonnances`),

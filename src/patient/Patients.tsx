@@ -97,7 +97,7 @@ function SectionList<T extends { id: string }>({
             style={{
               ...style,
               //  backgroundColor: "#f3f3f3",
-              marginLeft: nodeInfo.depth === 2 ? "20px" : 0,
+              marginLeft: nodeInfo.depth === 2 ? "25px" : 0,
               fontWeight: nodeInfo.depth === 1 ? 900 : 500,
             }}
           >

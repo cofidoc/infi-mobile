@@ -25,10 +25,7 @@ export function DateRangePickerField({ nameStart, nameEnd, index }: DateRangePic
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <StaticDateRangePicker
-        toolbarTitle=""
-        toolbarFormat="d MMM"
-        startText="Debut du Soin"
-        endText="Fin du Soin"
+        showToolbar={false}
         value={[fieldStart.value || null, fieldEnd.value || null] as any}
         onChange={(newValue: any) => {
           helpersStart.setValue(newValue?.[0]);

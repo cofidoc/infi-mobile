@@ -1,19 +1,25 @@
 import { useField } from "formik";
-import { TextField } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
+import { Add, Remove } from "@mui/icons-material";
 
 export function GenDayField({ name }: { name: string }) {
   const [field, _, helpers] = useField({ name });
 
-  const handleChange = (event: any) => {
-    helpers.setValue(Number(event.target.value));
-  };
-
   return (
-    <TextField
-      type="number"
-      label="Gen jours"
-      value={String(field.value === 0 ? "" : field.value)}
-      onChange={handleChange}
-    />
+    <Box sx={{ display: "flex", alignItems: "center" }}>
+      <Typography>Tous les</Typography>
+      <IconButton color="primary" onClick={() => helpers.setValue(field.value + 1)}>
+        <Add />
+      </IconButton>
+      <Typography>{String(field.value)}</Typography>
+      <IconButton
+        color="primary"
+        disabled={field.value === 0}
+        onClick={() => helpers.setValue(field.value <= 0 ? 0 : field.value - 1)}
+      >
+        <Remove />
+      </IconButton>
+      <Typography>jours</Typography>
+    </Box>
   );
 }

@@ -55,8 +55,6 @@ export function getGeneratedActs(care?: CareType): any[] {
       };
     });
 
-  console.log({ care, acts });
-
   const results2 = duplicateActByDay(acts);
   const results3 = results2?.map((a: any) => ({
     ...pick(a, ["plannedOn", "time", "quotation", "status", "comment"]),

@@ -4,6 +4,7 @@ import useSWR from "swr";
 import { useParams } from "react-router";
 import { OrdonnanceType } from "../types";
 import { useMemo } from "react";
+import { orderBy } from "lodash";
 
 export function useGetOrdonnances() {
   const { officeId, patientId } = useParams<{ officeId: string; patientId: string }>();
@@ -11,7 +12,10 @@ export function useGetOrdonnances() {
     `/offices/${officeId}/patients/${patientId}/ordonnances`,
     async () => {
       const docRef = await getDocs(collection(db, `/offices/${officeId}/patients/${patientId}/ordonnances`));
-      return docRef.docs.map((d) => ({ ...d.data(), id: d.id } as OrdonnanceType));
+      return orderBy(
+        docRef.docs.map((d) => ({ ...d.data(), id: d.id } as OrdonnanceType)),
+        "createdAt"
+      );
     }
   );
 

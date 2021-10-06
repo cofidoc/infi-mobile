@@ -37,6 +37,7 @@ export type OrdonnanceType = {
   }[];
   nbTotalActs?: number;
   nbActsDo?: number;
+  createdAt: Date;
 };
 
 // Soin

@@ -18,7 +18,7 @@ export function Patient() {
 
   return (
     <>
-      <Header text={`${patient?.firstname} ${patient?.lastname}` || "Patient"} />
+      <Header text={`${patient?.firstname || "..."} ${patient?.lastname || ""}`} />
       <Box>
         <Tabs
           value={value}
